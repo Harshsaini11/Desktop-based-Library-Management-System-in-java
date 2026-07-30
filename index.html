@@ -11,24 +11,31 @@
 <h2>Library Management System</h2>
 
 <script>
-async function startApp() {
 
-    console.log("Starting CheerpJ...");
+async function runApp(){
 
-    await cheerpjInit();
+    try {
 
-    console.log("CheerpJ Ready");
+        console.log("Loading CheerpJ...");
 
-    cheerpjCreateDisplay(900, 700);
+        await cheerpjInit({
+            version: "4.0"
+        });
 
-    cheerpjRunMain(
-        "harshsaini.LibraryManagementSystem",
-        "/app/LibraryManagementSystem.jar"
-    );
+        console.log("CheerpJ loaded");
+
+        cheerpjCreateDisplay(900,600);
+
+        cheerpjRunJar("/app/LibraryManagementSystem.jar");
+
+    }
+    catch(e){
+        console.error("CheerpJ Error:", e);
+    }
 
 }
 
-startApp();
+window.addEventListener("load", runApp);
 
 </script>
 
