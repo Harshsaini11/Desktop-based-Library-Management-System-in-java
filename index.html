@@ -3,107 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Management System - CheerpJ Web Runner</title>
+    <title>Library Management System</title>
 
-    <!-- CheerpJ CDN Script with Onload Trigger -->
-    <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js" onload="runJavaApp()"></script>
+    <!-- favicon error hatane ke liye -->
+    <link rel="icon" href="data:,">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html, body {
-            width: 100%;
-            height: 100%;
-            background-color: #0f172a;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        header {
-            background-color: #1e293b;
-            padding: 12px 20px;
-            border-bottom: 1px solid #334155;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 50px;
-        }
-        header h1 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #38bdf8;
-        }
-        header .status {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        header .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #eab308;
-            display: inline-block;
-        }
-        header .status-dot.active {
-            background-color: #22c55e;
-        }
-        #cheerpjDisplay {
-            flex: 1;
-            width: 100%;
-            height: calc(100vh - 50px);
-            background-color: #0f172a;
-        }
-    </style>
+    <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
 </head>
 <body>
-    <header>
-        <h1>📚 Library Management System (Java Swing Web Runner)</h1>
-        <div class="status">
-            <span id="statusDot" class="status-dot"></span>
-            <span id="statusText">Initializing CheerpJ Engine...</span>
-        </div>
-    </header>
 
-    <div id="cheerpjDisplay"></div>
+    <h2>Loading Library Management System...</h2>
 
     <script>
         async function runJavaApp() {
-            const statusDot = document.getElementById("statusDot");
-            const statusText = document.getElementById("statusText");
+            await cheerpjInit();
 
-            // Safety check for CheerpJ reference
-            if (typeof cheerpjInit !== "function") {
-                console.error("CheerpJ library is still loading...");
-                return;
-            }
-
-            try {
-                // 1. Initialize CheerpJ Engine
-                await cheerpjInit();
-                statusText.innerText = "Loading Java Application...";
-
-                // 2. Attach Swing Display
-                cheerpjCreateDisplay(-1, -1, document.getElementById("cheerpjDisplay"));
-
-                statusDot.classList.add("active");
-                statusText.innerText = "Application Running";
-
-                // 3. Run Main Class
-                await cheerpjRunMain("harshsaini.LibraryManagementSystem", "/app/LibraryManagementSystem.jar");
-            } catch (error) {
-                console.error("Error launching Java Application:", error);
-                statusText.innerText = "Failed to load application.";
-                statusDot.style.backgroundColor = "#ef4444";
-            }
+            // JAR file root folder me hai
+            await cheerpjRunJar("LibraryManagementSystem.jar");
         }
+
+        runJavaApp();
     </script>
+
 </body>
 </html>
