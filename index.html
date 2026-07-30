@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Management System</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management System</title>
 
-    <!-- favicon error hatane ke liye -->
-    <link rel="icon" href="data:,">
+  <!-- favicon 404 error avoid -->
+  <link rel="icon" href="data:,">
 
-    <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
+  <script src="https://cjrtnc.leaningtech.com/3.0/loader.js"></script>
 </head>
+
 <body>
+  <h2>Loading Library Management System...</h2>
 
-    <h2>Loading Library Management System...</h2>
+  <script>
+    async function runJavaApp() {
+      try {
+        await cheerpjInit();
+        await cheerpjRunJar("LibraryManagementSystem.jar");
+      } catch (e) {
+        console.error(e);
+        document.body.innerHTML += "<p>Error loading JAR file</p>";
+      }
+    }
 
-    <script>
-        async function runJavaApp() {
-            await cheerpjInit();
-
-            // JAR file root folder me hai
-            await cheerpjRunJar("LibraryManagementSystem.jar");
-        }
-
-        runJavaApp();
-    </script>
-
+    // Page load hone ke baad function call hoga
+    window.addEventListener("load", runJavaApp);
+  </script>
 </body>
 </html>
