@@ -6,46 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System</title>
 
-    <!-- favicon 404 error avoid -->
     <link rel="icon" href="data:,">
 </head>
 
 <body>
-    <h1>Library Management System</h1>
-    <p id="status">Loading Java application...</p>
 
-    <script>
-        // Loader dynamically add karo
-        const script = document.createElement("script");
-        script.src = "https://cdn.leaningtech.com/cheerpj/latest/loader.js";
+<h2>Library Management System</h2>
+<p id="status">Loading...</p>
 
-        script.onload = async function () {
-            try {
-                document.getElementById("status").innerText = "Initializing CheerpJ...";
+<script>
+const script = document.createElement("script");
+script.src = "https://cdn.leaningtech.com/cheerpj/latest/loader.js";
 
-                // CheerpJ initialize
-                await cheerpjInit();
+script.onload = async () => {
+    try {
+        document.getElementById("status").innerText =
+            "CheerpJ runtime ready";
 
-                document.getElementById("status").innerText = "Starting Library Management System...";
+        await cheerpjInit();
 
-                // JAR file run karo
-                await cheerpjRunJar("./LibraryManagementSystem.jar");
+        // GitHub Pages par same folder me rakhi JAR
+        await cheerpjRunJar("LibraryManagementSystem.jar");
 
-                document.getElementById("status").innerText = "Application started successfully";
-            } catch (err) {
-                console.error(err);
-                document.getElementById("status").innerText =
-                    "Error: " + err.message;
-            }
-        };
+        document.getElementById("status").innerText =
+            "Java application started successfully";
 
-        script.onerror = function () {
-            document.getElementById("status").innerText =
-                "Failed to load CheerpJ loader";
-        };
+    } catch (err) {
+        console.error(err);
 
-        document.head.appendChild(script);
-    </script>
+        document.getElementById("status").innerText =
+            "ERROR: " + err.message;
+    }
+};
+
+script.onerror = () => {
+    document.getElementById("status").innerText =
+        "Failed to load CheerpJ loader";
+};
+
+document.head.appendChild(script);
+</script>
+
 </body>
 </html>
 ```
