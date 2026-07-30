@@ -8,23 +8,7 @@
 
     <!-- CheerpJ 3.0 Official Script CDN -->
    <!-- 1. Include the CheerpJ loader script in the head -->
-<script src="https://cjrtnc.cheerpj.com/2/loader.js"></script>
-
-<script>
-    // 2. Wrap your logic in a listener to ensure the DOM and scripts are processed
-    window.addEventListener('load', async () => {
-        const status = document.getElementById("status");
-
-        if (typeof cheerpjInit !== "function") {
-            console.error("CheerpJ not loaded in global scope!");
-            status.innerText = "ERROR: CheerpJ CDN blocked or failed to load.";
-            return;
-        }
-
-        // Proceed with initialization
-        await cheerpjInit();
-    });
-</script>
+<script src="https://cjrtnc.cheerpj.com/loader.js"></script>
         * {
             box-sizing: border-box;
             margin: 0;
@@ -71,37 +55,17 @@
 <div id="cheerpjDisplay"></div>
 
 <script>
-window.addEventListener("load", async () => {
-    const status = document.getElementById("status");
-
-    // CheerpJ function check helper
-    if (typeof cheerpjInit !== "function") {
-        console.error("CheerpJ not loaded in global scope!");
-        status.innerText = "ERROR: CheerpJ CDN blocked or failed to load.";
-        return;
+  // 2. Use window.onload or ensure this script follows the loader
+  window.onload = async function() {
+    if (typeof cheerpjInit !== 'undefined') {
+      await cheerpjInit();
+      cheerpjCreateDisplay(-1, -1);
+      // Run your Java application
+      cheerpjRunMain("YourClassName", "/app/");
+    } else {
+      console.error("CheerpJ loader failed to populate the global scope.");
     }
-
-    try {
-        status.innerText = "Initializing CheerpJ runtime...";
-
-        // 1. Initialize CheerpJ Engine
-        await cheerpjInit();
-
-        // 2. Create Swing Window Container
-        cheerpjCreateDisplay(-1, -1, document.getElementById("cheerpjDisplay"));
-
-        status.innerText = "Starting Java Application...";
-
-        // 3. Run Application Main Class
-        await cheerpjRunMain("harshsaini.LibraryManagementSystem", "/app/LibraryManagementSystem.jar");
-
-        status.innerText = "Application Running";
-
-    } catch (err) {
-        console.error("Launch Error:", err);
-        status.innerText = "ERROR: " + err.message;
-    }
-});
+  };
 </script>
 
 </body>
