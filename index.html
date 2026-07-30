@@ -1,27 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System</title>
+    <link rel="icon" href="data:,">
 
-    <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
+    <!-- CheerpJ 3.0 Official Script CDN -->
+    <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js"></script>
 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        #header {
+            padding: 12px 20px;
+            background-color: #1e293b;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #status {
+            font-size: 0.9rem;
+            color: #38bdf8;
+        }
+        #cheerpjDisplay {
+            flex: 1;
+            width: 100%;
+            height: calc(100vh - 50px);
+            background-color: #0f172a;
+        }
+    </style>
 </head>
-
 <body>
 
-<h2>Library Management System</h2>
+<div id="header">
+    <h3>📚 Library Management System</h3>
+    <p id="status">Loading CheerpJ Engine...</p>
+</div>
+
+<!-- Swing Window Render Area -->
+<div id="cheerpjDisplay"></div>
 
 <script>
-async function runJavaApp() {
+window.addEventListener("load", async () => {
+    const status = document.getElementById("status");
 
-    await cheerpjInit();
+    // CheerpJ function check helper
+    if (typeof cheerpjInit !== "function") {
+        console.error("CheerpJ not loaded in global scope!");
+        status.innerText = "ERROR: CheerpJ CDN blocked or failed to load.";
+        return;
+    }
 
-    cheerpjRunJar("/app/LibraryManagementSystem.jar");
+    try {
+        status.innerText = "Initializing CheerpJ runtime...";
 
-}
+        // 1. Initialize CheerpJ Engine
+        await cheerpjInit();
 
-window.onload = runJavaApp;
+        // 2. Create Swing Window Container
+        cheerpjCreateDisplay(-1, -1, document.getElementById("cheerpjDisplay"));
 
+        status.innerText = "Starting Java Application...";
+
+        // 3. Run Application Main Class
+        await cheerpjRunMain("harshsaini.LibraryManagementSystem", "/app/LibraryManagementSystem.jar");
+
+        status.innerText = "Application Running";
+
+    } catch (err) {
+        console.error("Launch Error:", err);
+        status.innerText = "ERROR: " + err.message;
+    }
+});
 </script>
 
 </body>
