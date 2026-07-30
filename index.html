@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,23 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System</title>
 
+    <!-- favicon 404 error avoid -->
     <link rel="icon" href="data:,">
-
-    <!-- Official CheerpJ loader -->
-    <script src="https://cjrtnc.leaningtech.com/4.0/loader.js"></script>
 </head>
 
 <body>
-    <h2>Loading Java Application...</h2>
+    <h1>Library Management System</h1>
+    <p id="status">Loading Java application...</p>
 
     <script>
-        async function runJavaApp() {
-            await cheerpjInit();
+        // Loader dynamically add karo
+        const script = document.createElement("script");
+        script.src = "https://cdn.leaningtech.com/cheerpj/latest/loader.js";
 
-            await cheerpjRunJar("./LibraryManagementSystem.jar");
-        }
+        script.onload = async function () {
+            try {
+                document.getElementById("status").innerText = "Initializing CheerpJ...";
 
-        runJavaApp();
+                // CheerpJ initialize
+                await cheerpjInit();
+
+                document.getElementById("status").innerText = "Starting Library Management System...";
+
+                // JAR file run karo
+                await cheerpjRunJar("./LibraryManagementSystem.jar");
+
+                document.getElementById("status").innerText = "Application started successfully";
+            } catch (err) {
+                console.error(err);
+                document.getElementById("status").innerText =
+                    "Error: " + err.message;
+            }
+        };
+
+        script.onerror = function () {
+            document.getElementById("status").innerText =
+                "Failed to load CheerpJ loader";
+        };
+
+        document.head.appendChild(script);
     </script>
 </body>
 </html>
+```
