@@ -7,9 +7,24 @@
     <link rel="icon" href="data:,">
 
     <!-- CheerpJ 3.0 Official Script CDN -->
-    <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js"></script>
+   <!-- 1. Include the CheerpJ loader script in the head -->
+<script src="https://cjrtnc.cheerpj.com/2/loader.js"></script>
 
-    <style>
+<script>
+    // 2. Wrap your logic in a listener to ensure the DOM and scripts are processed
+    window.addEventListener('load', async () => {
+        const status = document.getElementById("status");
+
+        if (typeof cheerpjInit !== "function") {
+            console.error("CheerpJ not loaded in global scope!");
+            status.innerText = "ERROR: CheerpJ CDN blocked or failed to load.";
+            return;
+        }
+
+        // Proceed with initialization
+        await cheerpjInit();
+    });
+</script>
         * {
             box-sizing: border-box;
             margin: 0;
