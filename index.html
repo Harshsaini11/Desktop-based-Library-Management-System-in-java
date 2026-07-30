@@ -32,7 +32,9 @@ async function runApp(){
 
         console.log("Starting CheerpJ...");
 
-        await cheerpjInit();
+        await cheerpjInit({
+            version: 17
+        });
 
         console.log("CheerpJ Ready");
 
