@@ -1,89 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System</title>
-    <link rel="icon" href="data:,">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            width: 100vw;
-            height: 100vh;
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        #header {
-            padding: 12px 20px;
-            background-color: #1e293b;
-            border-bottom: 1px solid #334155;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #status {
-            font-size: 0.9rem;
-            color: #38bdf8;
-        }
-        #cheerpjDisplay {
-            flex: 1;
-            width: 100%;
-            height: calc(100vh - 50px);
-            background-color: #0f172a;
-        }
-    </style>
+
+    <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
+
 </head>
+
 <body>
 
-<div id="header">
-    <h3>📚 Library Management System</h3>
-    <p id="status">Loading CheerpJ Engine...</p>
-</div>
-
-<!-- Swing Window Render Area -->
-<div id="cheerpjDisplay"></div>
+<h2>Library Management System</h2>
 
 <script>
-const script = document.createElement("script");
-// Correct CheerpJ 3.0 CDN Endpoint
-script.src = "https://cjrtnc.leaningtech.com/3.0/cj3load.js";
+async function runJavaApp() {
 
-script.onload = async () => {
-    try {
-        document.getElementById("status").innerText = "Initializing CheerpJ runtime...";
+    await cheerpjInit();
 
-        // 1. Initialize Runtime
-        await cheerpjInit();
+    cheerpjRunJar("/app/LibraryManagementSystem.jar");
 
-        // 2. Attach GUI Display
-        cheerpjCreateDisplay(-1, -1, document.getElementById("cheerpjDisplay"));
+}
 
-        document.getElementById("status").innerText = "Starting Java Application...";
+window.onload = runJavaApp;
 
-        // 3. Run JAR File
-        await cheerpjRunJar("/app/LibraryManagementSystem.jar");
-
-        document.getElementById("status").innerText = "Application Running";
-
-    } catch (err) {
-        console.error(err);
-        document.getElementById("status").innerText = "ERROR: " + err.message;
-    }
-};
-
-script.onerror = () => {
-    document.getElementById("status").innerText = "Failed to load CheerpJ loader (CDN Error)";
-};
-
-document.head.appendChild(script);
 </script>
 
 </body>
