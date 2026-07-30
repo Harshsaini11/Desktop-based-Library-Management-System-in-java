@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System - CheerpJ Live Web Runner</title>
-    <!-- CheerpJ 3.0 Runtime CDN -->
-    <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js"></script>
+    <!-- CheerpJ 3.0 Runtime CDN with Onload Handler -->
+    <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js" onload="runJavaApp()"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -77,6 +77,12 @@
             const statusDot = document.getElementById("statusDot");
             const statusText = document.getElementById("statusText");
 
+            // Double check if CheerpJ is loaded
+            if (typeof cheerpjInit !== "function") {
+                console.error("CheerpJ library is not loaded yet.");
+                return;
+            }
+
             try {
                 // 1. Initialize CheerpJ
                 await cheerpjInit();
@@ -88,9 +94,7 @@
                 statusDot.classList.add("active");
                 statusText.innerText = "Application Running";
 
-                // 3. Run Java App with Correct Fully Qualified Main Class Name and JAR Path
-                // Main Class: harshsaini.LibraryManagementSystem
-                // JAR File: LibraryManagementSystem.jar
+                // 3. Run Java App
                 await cheerpjRunMain("harshsaini.LibraryManagementSystem", "/app/LibraryManagementSystem.jar");
             } catch (error) {
                 console.error("Error launching Java Application:", error);
@@ -98,8 +102,6 @@
                 statusDot.style.backgroundColor = "#ef4444";
             }
         }
-
-        window.onload = runJavaApp;
     </script>
 </body>
 </html>
