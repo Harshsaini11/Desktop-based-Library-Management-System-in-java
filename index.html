@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Management System - CheerpJ Live Web Runner</title>
-    <!-- CheerpJ 3.0 Runtime CDN with Onload Handler -->
+    <title>Library Management System - CheerpJ Web Runner</title>
+
+    <!-- CheerpJ CDN Script with Onload Trigger -->
     <script src="https://cjrtnc.leaningtech.com/3.0/cj3load.js" onload="runJavaApp()"></script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -77,24 +79,24 @@
             const statusDot = document.getElementById("statusDot");
             const statusText = document.getElementById("statusText");
 
-            // Double check if CheerpJ is loaded
+            // Safety check for CheerpJ reference
             if (typeof cheerpjInit !== "function") {
-                console.error("CheerpJ library is not loaded yet.");
+                console.error("CheerpJ library is still loading...");
                 return;
             }
 
             try {
-                // 1. Initialize CheerpJ
+                // 1. Initialize CheerpJ Engine
                 await cheerpjInit();
-                statusText.innerText = "Loading Application...";
+                statusText.innerText = "Loading Java Application...";
 
-                // 2. Attach CheerpJ Display to DIV Container
+                // 2. Attach Swing Display
                 cheerpjCreateDisplay(-1, -1, document.getElementById("cheerpjDisplay"));
 
                 statusDot.classList.add("active");
                 statusText.innerText = "Application Running";
 
-                // 3. Run Java App
+                // 3. Run Main Class
                 await cheerpjRunMain("harshsaini.LibraryManagementSystem", "/app/LibraryManagementSystem.jar");
             } catch (error) {
                 console.error("Error launching Java Application:", error);
